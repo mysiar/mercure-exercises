@@ -11,7 +11,8 @@
 <div class="example-wrapper">
     <h1>Mercure.Rocks - Listener ✅</h1>
 
-    <h3>Semi protected - JWT subscriber key visible in JS</h3>
+    <h3>Anonymous mode</h3>
+    <h4>only with: mercure.yaml => allow_anonymous: true</h4>
 
     Incoming message:
     <ul>
@@ -22,13 +23,8 @@
 {% endblock %}
 
 {% block javascripts %}
-    <script src={{ asset('eventsource.min.js') }}></script>
     <script>
-      const eventSource = new EventSourcePolyfill('{{ url }}?topic={{ topic }}', {
-        headers: {
-          'authorization': 'Bearer {{ token }}',
-        }
-      });
+      const eventSource = new EventSource('http://localhost:3333/.well-known/mercure?topic=test');
       eventSource.onmessage = event => {
         document.getElementById('id').innerHTML = event.lastEventId;
         document.getElementById('data').innerHTML = JSON.parse(event.data).headline;

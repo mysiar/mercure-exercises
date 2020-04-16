@@ -25,7 +25,8 @@ class MercureSendController extends AbstractController
             $data = $form->getData();
             $publisher(new Update(
                 'test',
-                json_encode(['headline'=> $data['headline']])
+                json_encode(['headline'=> $data['headline']]),
+                ['https://127.0.0.1:8000/mercure/listen']
             ));
             $form = $this->createForm(SingleInputType::class);
         }
